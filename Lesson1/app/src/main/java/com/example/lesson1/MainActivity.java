@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        startStop = false;
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        startStop = false;
+//    }
 }
