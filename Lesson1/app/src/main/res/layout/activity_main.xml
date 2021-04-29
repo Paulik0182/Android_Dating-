@@ -18,7 +18,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
         android:layout_weight="1"
-        android:background="#3C96F898"
+        android:background="@drawable/text_input"
+        android:gravity="right"
         android:padding="10dp"
         android:text="0"
         android:textColor="#4949E8"
@@ -38,9 +39,9 @@
             android:text="C" />
 
         <Button
-            android:id="@+id/test1"
+            android:id="@+id/delCharacter"
             style="@style/button"
-            android:text="" />
+            android:text="del" />
 
         <Button
             android:id="@+id/test2"

@@ -31,5 +31,6 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/images_button2</item>
+        <item name="android:onClick">ClickButton</item>
     </style>
 </resources>
