@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             String numder[] = input.split("x");
             try {
                 double multiply = Double.parseDouble(numder[0]) * Double.parseDouble(numder[1]);
-                input = multiply+"";
+                input = multiply + "";
             } catch (Exception e) {
             }
         }
@@ -88,34 +88,33 @@ public class MainActivity extends AppCompatActivity {
             String numder[] = input.split("/");
             try {
                 double divide = Double.parseDouble(numder[0]) / Double.parseDouble(numder[1]);
-                input = divide+"";
+                input = divide + "";
             } catch (Exception e) {
             }
         }
 
-        if (input.split("plus").length == 2) {
-            String numder[] = input.split("plus");
+        if (input.split("\\+").length == 2) {
+            String numder[] = input.split("\\+");
             try {
                 double plus = Double.parseDouble(numder[0]) + Double.parseDouble(numder[1]);
-                input = plus+"";
+                input = plus + "";
             } catch (Exception e) {
             }
         }
 
-        if (input.split("-").length>1) {
+        if (input.split("-").length > 1) {
             String numder[] = input.split("-");
             if (numder[0] == "" && numder.length == 2) {
                 numder[0] = 0 + "";
             }
             try {
-                double minus=0;
-                if (numder.length==2){
-                    minus= Double.parseDouble(numder[0]) - Double.parseDouble(numder[1]);
+                double minus = 0;
+                if (numder.length == 2) {
+                    minus = Double.parseDouble(numder[0]) - Double.parseDouble(numder[1]);
+                } else if (numder.length == 3) {
+                    minus = -Double.parseDouble(numder[1]) - Double.parseDouble(numder[2]);
                 }
-                else if (numder.length==3){
-                    minus= -Double.parseDouble(numder[1]) - Double.parseDouble(numder[2]);
-                }
-                input = minus+"";
+                input = minus + "";
             } catch (Exception e) {
             }
         }
@@ -127,7 +126,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Screen.setText(input);
-
-
     }
 }
