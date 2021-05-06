@@ -23,7 +23,7 @@
         android:padding="10dp"
         android:text="0"
         android:textColor="#4949E8"
-        android:textSize="40sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints" />
 
@@ -33,22 +33,22 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/c"
             style="@style/button"
             android:text="C" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/delCharacter"
             style="@style/button"
             android:text="del" />
 
-        <Button
-            android:id="@+id/test2"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/multiply"
             style="@style/button"
-            android:text="" />
+            android:text="x" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/divide"
             style="@style/button"
             android:text="/" />
@@ -60,49 +60,22 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/seven"
             style="@style/button"
             android:text="7" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/eight"
             style="@style/button"
             android:text="8" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/nine"
             style="@style/button"
             android:text="9" />
 
-        <Button
-            android:id="@+id/multiply"
-            style="@style/button"
-            android:text="x" />
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/Layout"
-        app:layout_constraintTop_toBottomOf="@+id/screen"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
-
-        <Button
-            android:id="@+id/four"
-            style="@style/button"
-            android:text="4" />
-
-        <Button
-            android:id="@+id/five"
-            style="@style/button"
-            android:text="5" />
-
-        <Button
-            android:id="@+id/six"
-            style="@style/button"
-            android:text="6" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/plus"
             style="@style/button"
             android:text="+" />
@@ -114,25 +87,25 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
 
-        <Button
-            android:id="@+id/one"
-            style="@style/button"
-            android:text="1" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/four"
+                style="@style/button"
+                android:text="4" />
 
-        <Button
-            android:id="@+id/two"
-            style="@style/button"
-            android:text="2" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/five"
+                style="@style/button"
+                android:text="5" />
 
-        <Button
-            android:id="@+id/three"
-            style="@style/button"
-            android:text="3" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/six"
+                style="@style/button"
+                android:text="6" />
 
-        <Button
-            android:id="@+id/minus"
-            style="@style/button"
-            android:text="-" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/minus"
+                style="@style/button"
+                android:text="-" />
     </LinearLayout>
 
     <LinearLayout
@@ -141,22 +114,45 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/one"
+            style="@style/button"
+            android:text="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/two"
+            style="@style/button"
+            android:text="2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/three"
+            style="@style/button"
+            android:text="3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent"
+            style="@style/buttonClean"
+            android:onClick="percentEvent"
+            android:text="%" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/Layout2"
+        app:layout_constraintTop_toBottomOf="@+id/screen"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/zero"
             style="@style/button"
             android:text="0" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/point"
             style="@style/button"
             android:text="." />
 
-        <Button
-            android:id="@+id/percent"
-            style="@style/button"
-            android:text="%" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/equally"
             style="@style/button"
             android:text="=" />

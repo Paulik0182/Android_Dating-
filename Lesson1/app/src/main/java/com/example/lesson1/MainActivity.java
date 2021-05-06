@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 Solve();
                 Answer += input;
                 break;
+            case "%":
+                Solve();
+                input += "%";
+                break;
             case "del":
                 String newText = input.substring(0, input.length() - 1);
                 input = newText;
@@ -93,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+//        if (input.split("%").length == 2) {
+//            String numder[] = input.split("%");
+//            try {
+//                double percent = Double.parseDouble(numder[0]) / 100;
+//                input = percent + "";
+//            } catch (Exception e) {
+//            }
+//        }
+
         if (input.split("\\+").length == 2) {
             String numder[] = input.split("\\+");
             try {
@@ -126,5 +139,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Screen.setText(input);
+    }
+
+    public void percentEvent(View view) {
+        try {
+            double percent = Double.parseDouble(Screen.getText().toString()) / 100;
+//            double percent = Double.parseDouble(Screen.getText().toString()) - ((Double.parseDouble(Screen.getText().toString()) / 100)*10);
+            Screen.setText(percent + "");
+        } catch (Exception e) {
+        }
     }
 }
