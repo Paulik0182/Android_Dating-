@@ -7,48 +7,72 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
 
-    private TextView Screen;
-    private Button C, Divide, Seven, Eight, Nine, Multiply, Four, Five, Six, Plus, One, Two, Three, Minus, Zero, Point, Percent, Equally, DelCharacter;
-    private String input, Answer;
+    private TextView screen;
+    private Button c;
+    private Button divide;
+    private Button seven;
+    private Button eight;
+    private Button nine;
+    private Button multiply;
+    private Button four;
+    private Button five;
+    private Button six;
+    private Button plus;
+    private Button one;
+    private Button two;
+    private Button three;
+    private Button minus;
+    private Button zero;
+    private Button point;
+    private Button percent;
+    private Button equally;
+    private Button delCharacter;
+    private String input;
+    private String answer;
+//    private static final String data;
+//    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Screen = findViewById(R.id.screen);
-        C = findViewById(R.id.c);
-        Divide = findViewById(R.id.divide);
-        Seven = findViewById(R.id.seven);
-        Eight = findViewById(R.id.eight);
-        Nine = findViewById(R.id.nine);
-        Multiply = findViewById(R.id.multiply);
-        Four = findViewById(R.id.four);
-        Five = findViewById(R.id.five);
-        Six = findViewById(R.id.six);
-        Plus = findViewById(R.id.plus);
-        One = findViewById(R.id.one);
-        Two = findViewById(R.id.two);
-        Three = findViewById(R.id.three);
-        Minus = findViewById(R.id.minus);
-        Zero = findViewById(R.id.zero);
-        Point = findViewById(R.id.point);
-        Percent = findViewById(R.id.percent);
-        Equally = findViewById(R.id.equally);
-        DelCharacter = findViewById(R.id.delCharacter);
+        screen = findViewById(R.id.screen);
+        c = findViewById(R.id.c);
+        divide = findViewById(R.id.divide);
+        seven = findViewById(R.id.seven);
+        eight = findViewById(R.id.eight);
+        nine = findViewById(R.id.nine);
+        multiply = findViewById(R.id.multiply);
+        four = findViewById(R.id.four);
+        five = findViewById(R.id.five);
+        six = findViewById(R.id.six);
+        plus = findViewById(R.id.plus);
+        one = findViewById(R.id.one);
+        two = findViewById(R.id.two);
+        three = findViewById(R.id.three);
+        minus = findViewById(R.id.minus);
+        zero = findViewById(R.id.zero);
+        point = findViewById(R.id.point);
+        percent = findViewById(R.id.percent);
+        equally = findViewById(R.id.equally);
+        delCharacter = findViewById(R.id.delCharacter);
     }
 
     public void ClickButton(View view) {
-        Button button = (Button) view;
-        String data = button.getText().toString();
-        switch (data) {
+        final Button BUTTON;
+        final String DATA;
+        BUTTON = (Button) view;
+        DATA = BUTTON.getText().toString();
+        switch (DATA) {
             case "C":
                 input = "";
                 break;
             case "A":
-                input += Answer;
+                input += answer;
                 break;
             case "x":
                 Solve();
@@ -56,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "=":
                 Solve();
-                Answer += input;
+                answer += input;
                 break;
             case "%":
                 Solve();
@@ -66,16 +90,28 @@ public class MainActivity extends AppCompatActivity {
                 String newText = input.substring(0, input.length() - 1);
                 input = newText;
                 break;
+//            case "+":
+//                Solve();
+//                input += "+";
+//                break;
+//            case "-":
+//                Solve();
+//                input += "-";
+//                break;
+//            case "/":
+//                Solve();
+//                input += "/";
+//                break;
             default:
                 if (input == null) {
                     input = "";
                 }
-                if (data.equals("+") || data.equals("-") || data.equals("/")) {
+                if (DATA.equals("+") || DATA.equals("-") || DATA.equals("/")) {
                     Solve();
                 }
-                input += data;
+                input += DATA;
         }
-        Screen.setText(input);
+        screen.setText(input);
     }
 
     private void Solve() {
@@ -138,14 +174,14 @@ public class MainActivity extends AppCompatActivity {
                 input = n[0];
             }
         }
-        Screen.setText(input);
+        screen.setText(input);
     }
 
     public void percentEvent(View view) {
         try {
-            double percent = Double.parseDouble(Screen.getText().toString()) / 100;
+            double percent = Double.parseDouble(screen.getText().toString()) / 100;
 //            double percent = Double.parseDouble(Screen.getText().toString()) - ((Double.parseDouble(Screen.getText().toString()) / 100)*10);
-            Screen.setText(percent + "");
+            screen.setText(percent + "");
         } catch (Exception e) {
         }
     }
