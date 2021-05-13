@@ -2,13 +2,15 @@ package com.example.lesson1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 @SuppressWarnings("ALL")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView screen;
     private Button c;
@@ -30,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private Button percent;
     private Button equally;
     private Button delCharacter;
+    private Button night;
     private String input;
     private String answer;
-//    private static final String data;
-//    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         screen = findViewById(R.id.screen);
         c = findViewById(R.id.c);
@@ -60,9 +62,28 @@ public class MainActivity extends AppCompatActivity {
         percent = findViewById(R.id.percent);
         equally = findViewById(R.id.equally);
         delCharacter = findViewById(R.id.delCharacter);
+        night = findViewById(R.id.night);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.night:
+                Intent intent = new Intent(this, ActivitySettings.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     public void ClickButton(View view) {
+
+        final TextView textView = findViewById(R.id.screen);
+        final EditText editText = findViewById(R.id.screen);
+        String name = editText.getText().toString();
+
         final Button BUTTON;
         final String DATA;
         BUTTON = (Button) view;
@@ -90,18 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 String newText = input.substring(0, input.length() - 1);
                 input = newText;
                 break;
-//            case "+":
-//                Solve();
-//                input += "+";
-//                break;
-//            case "-":
-//                Solve();
-//                input += "-";
-//                break;
-//            case "/":
-//                Solve();
-//                input += "/";
-//                break;
             default:
                 if (input == null) {
                     input = "";
@@ -132,15 +141,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
         }
-
-//        if (input.split("%").length == 2) {
-//            String numder[] = input.split("%");
-//            try {
-//                double percent = Double.parseDouble(numder[0]) / 100;
-//                input = percent + "";
-//            } catch (Exception e) {
-//            }
-//        }
 
         if (input.split("\\+").length == 2) {
             String numder[] = input.split("\\+");
@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
     public void percentEvent(View view) {
         try {
             double percent = Double.parseDouble(screen.getText().toString()) / 100;
-//            double percent = Double.parseDouble(Screen.getText().toString()) - ((Double.parseDouble(Screen.getText().toString()) / 100)*10);
             screen.setText(percent + "");
         } catch (Exception e) {
         }
