@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +24,7 @@
         android:padding="10dp"
         android:text="0"
         android:textColor="#4949E8"
-        android:textSize="40dp" />
+        android:textSize="34sp" />
 
     <LinearLayout
         style="@style/Layout"
@@ -35,27 +36,27 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/c"
-            style="@style/button"
-            android:text="C"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="C" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delCharacter"
-            style="@style/button"
-            android:text="del"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="del" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/multiply"
-            style="@style/button"
-            android:text="x"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="x" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/divide"
-            style="@style/button"
-            android:text="/"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="/" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,27 +69,27 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/seven"
-            style="@style/button"
-            android:text="7"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="7" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/eight"
-            style="@style/button"
-            android:text="8"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="8" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nine"
-            style="@style/button"
-            android:text="9"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="9" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/plus"
-            style="@style/button"
-            android:text="+"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="+" />
     </LinearLayout>
 
     <LinearLayout
@@ -99,29 +100,29 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/four"
-                style="@style/button"
-                android:text="4"
-                android:onClick="ClickButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/four"
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="4" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/five"
-                style="@style/button"
-                android:text="5"
-                android:onClick="ClickButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/five"
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="5" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/six"
-                style="@style/button"
-                android:text="6"
-                android:onClick="ClickButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/six"
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="6" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/minus"
-                style="@style/button"
-                android:text="-"
-                android:onClick="ClickButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/minus"
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="-" />
     </LinearLayout>
 
     <LinearLayout
@@ -134,25 +135,25 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/one"
-            style="@style/button"
-            android:text="1"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="1" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/two"
-            style="@style/button"
-            android:text="2"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/three"
-            style="@style/button"
-            android:text="3"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/percent"
-            style="@style/buttonClean"
+            style="@style/buttonCleanLond"
             android:onClick="percentEvent"
             android:text="%" />
     </LinearLayout>
@@ -167,27 +168,28 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/zero"
-            style="@style/button"
-            android:text="0"
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="0" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/point"
-            style="@style/button"
-            android:text="."
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="." />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/equally"
-            style="@style/button"
-            android:text="="
-            android:onClick="ClickButton"/>
+            style="@style/buttonLond"
+            android:onClick="ClickButton"
+            android:text="=" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/night"
-            style="@style/button"
+            style="@style/buttonLond"
             android:text="N"
             android:onClick="ClickButton"/>
     </LinearLayout>
+
 
 </LinearLayout>
