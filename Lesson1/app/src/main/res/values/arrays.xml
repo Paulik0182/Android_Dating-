@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+        <item>Екатеринбург</item>
+        <item>Новосибирск</item>
+        <item>Самара</item>
+        <item>Тюмень</item>
+        <item>Новый Уренгой</item>
+    </string-array>
+
+    <integer-array name="coat_of_arms_imgs">
+        <item>@drawable/moskow</item><!-- герб Москвы -->
+        <item>@drawable/piter</item><!-- герб Санкт-Петербурга -->
+        <item>@drawable/ekaterenburg</item><!-- герб Екатеринбурга -->
+        <item>@drawable/novosibirsk</item><!-- герб Новосибирска -->
+        <item>@drawable/samara</item><!-- герб Самары -->
+        <item>@drawable/tyumenj</item><!-- герб Тюмени -->
+        <item>@drawable/novij_urengoj</item><!-- герб Нового Уренгоя -->
+    </integer-array>
+
+</resources>
