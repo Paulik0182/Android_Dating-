@@ -16,7 +16,7 @@
         <item>@drawable/ekaterenburg</item><!-- герб Екатеринбурга -->
         <item>@drawable/novosibirsk</item><!-- герб Новосибирска -->
         <item>@drawable/samara</item><!-- герб Самары -->
-        <item>@drawable/tyumenj</item><!-- герб Тюмени -->
+        <item>@drawable/tyumen</item><!-- герб Тюмени -->
         <item>@drawable/novij_urengoj</item><!-- герб Нового Уренгоя -->
     </integer-array>
 
