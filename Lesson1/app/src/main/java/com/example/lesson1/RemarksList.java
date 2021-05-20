@@ -1,5 +1,7 @@
 package com.example.lesson1;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -8,28 +10,37 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.util.Objects;
+
 public class RemarksList extends Fragment {
 
-    private static final String CURRENT_REMARK = "CurrentNote";
+    private static final String CURRENT_REMARK = "CurrentRemark";
     private Remark currentRemark;
     private boolean isLandscape;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_remarks_list, container, false);
+//        return view;
         return inflater.inflate(R.layout.fragment_remarks_list, container, false);
     }
 
@@ -39,6 +50,7 @@ public class RemarksList extends Fragment {
         initList(view);
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void initList(View view) {
         LinearLayout layoutView = (LinearLayout) view;
         String[] dates = getResources().getStringArray(R.array.dates);
@@ -46,10 +58,11 @@ public class RemarksList extends Fragment {
         for (int i = 0; i < remarks.length; i++) {
             String remark = remarks[i];
             String date = dates[i];
-            LinearLayoutCompat subLayoutView = new LinearLayoutCompat(getContext());
+            LinearLayoutCompat subLayoutView = new LinearLayoutCompat(Objects.requireNonNull(getContext()));
             subLayoutView.setOrientation(LinearLayoutCompat.VERTICAL);
             TextView textviewName = new TextView(getContext());
             TextView textviewDate = new TextView(getContext());
+            int subLayoutViewId = subLayoutView.getId();
 
             // оформление view
             int remarkColor = Color.parseColor("#FFFAF096");
@@ -70,6 +83,28 @@ public class RemarksList extends Fragment {
             subLayoutView.addView(textviewDate);
             layoutView.addView(subLayoutView);
 
+            // вызов menu
+            subLayoutView.setOnLongClickListener(v -> {
+                Activity activity = requireActivity();
+                PopupMenu popupMenu = new PopupMenu(activity, v);
+                Menu menu = popupMenu.getMenu();
+                activity.getMenuInflater().inflate(R.menu.popup, menu);
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    int id = item.getItemId();
+                    switch (id) {
+                        case R.id.favorite_popup:
+                            Toast.makeText(getContext(), "В Избранное", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.delete_popup:
+                            Toast.makeText(getContext(), "Удалить", Toast.LENGTH_SHORT).show();
+                            return true;
+                    }
+                    return true;
+                });
+                popupMenu.show();
+                return true;
+            });
+
             // обработка нажатия на заметку
             final int index = i;
             subLayoutView.setOnClickListener(v -> {
@@ -89,13 +124,22 @@ public class RemarksList extends Fragment {
     }
 
     private void showRemarkPortrait(Remark remark) {
+        // создаём новый фрагмент
+        RemarksDetailedFragment notesDetailed = RemarksDetailedFragment.newInstance(remark);
+        // выполняем транзакцию по замене фрагмента
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.remarkDetailed, notesDetailed);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
 
         // переходим на RemarkssDetailedActivity, т.к. к ней привязан фрагмент с деталями заметки
         Intent intent = new Intent();
         intent.setClass(getActivity(), RemarksDetailedActivity.class);
         // передаем с интентом экземпляр заметки, по которой было нажатие
         intent.putExtra(RemarksDetailedFragment.ARG_REMARK, remark);
-        startActivity(intent);
+//        startActivity(intent);
     }
 
     private void showRemarkLandscape(Remark remark) {

@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:background="#69EC70"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#69EC70"
+    android:orientation="horizontal">
 
-    <fragment android:name="com.example.lesson1.RemarksList"
-        android:id="@+id/remarkName"
+    <fragment
+        android:id="@+id/remarkList"
+        android:name="com.example.lesson1.RemarksList"
 
-
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:layout_width="0px"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"/>
 
     <FrameLayout
         android:id="@+id/remarkDetailed"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="10"
         android:background="?android:attr/detailsElementBackground" />
 
+    <FrameLayout
+        android:id="@+id/remarkDivider"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="0.05"
+        android:background="?android:attr/detailsElementBackground"
+        android:backgroundTint="@color/black" />
 </LinearLayout>
