@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="remarks">
+    <string-array name="notes">
         <item>Характеристики ПК</item>
         <item>График посящения бассейна</item>
         <item>Что купить в Ikei</item>

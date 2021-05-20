@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9CEFAA"
+    android:orientation="vertical"
+    android:background="#FFFAF096"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    tools:context=".RemarksDetailedFragment">
+    tools:context=".NotesDetailedFragment"
+    >
 
 
     <LinearLayout
@@ -17,34 +18,34 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/remarkName"
+            android:id="@+id/noteName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/hello_blank_fragment"
             android:textColor="@color/black"
             android:textSize="@dimen/descriptionTextSizePortrait"
+            android:layout_weight="1"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/remarkDate"
+            android:id="@+id/noteDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="top"
             android:layout_weight="3"
-            android:text="@string/blank_date"
+            android:layout_gravity="top"
             android:textAlignment="viewEnd"
+            android:text="@string/blank_date"
             android:textSize="@dimen/dateTextSizePortrait"
             tools:ignore="RtlCompat" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/remarkDescription"
+        android:id="@+id/noteDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:layout_margin="@dimen/edgeMarginPortrait"
         android:text="@string/blank_description"
-        android:textSize="@dimen/descriptionTextSizePortrait" />
+        android:textSize="@dimen/descriptionTextSizePortrait"/>
 
 </LinearLayout>

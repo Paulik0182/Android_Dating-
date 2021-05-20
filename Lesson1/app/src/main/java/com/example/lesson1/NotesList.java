@@ -1,6 +1,5 @@
 package com.example.lesson1;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -28,20 +27,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.Objects;
 
-public class RemarksList extends Fragment {
+public class NotesList extends Fragment {
 
-    private static final String CURRENT_REMARK = "CurrentRemark";
-    private Remark currentRemark;
+    private static final String CURRENT_NOTE = "CurrentNote";
+    private Note currentNote;
     private boolean isLandscape;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_remarks_list, container, false);
-//        return view;
-        return inflater.inflate(R.layout.fragment_remarks_list, container, false);
+        // непонятно
+        View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
+        return view;
     }
 
     @Override
@@ -50,40 +48,41 @@ public class RemarksList extends Fragment {
         initList(view);
     }
 
-    @SuppressLint("NonConstantResourceId")
+
     private void initList(View view) {
+
         LinearLayout layoutView = (LinearLayout) view;
         String[] dates = getResources().getStringArray(R.array.dates);
-        String[] remarks = getResources().getStringArray(R.array.remarks);
-        for (int i = 0; i < remarks.length; i++) {
-            String remark = remarks[i];
+        String[] notes = getResources().getStringArray(R.array.notes);
+        for (int i = 0; i < notes.length; i++) {
+            String note = notes[i];
             String date = dates[i];
-            LinearLayoutCompat subLayoutView = new LinearLayoutCompat(Objects.requireNonNull(getContext()));
+            LinearLayoutCompat subLayoutView = new LinearLayoutCompat(getContext());
+            int subLayoutViewId = subLayoutView.getId();
             subLayoutView.setOrientation(LinearLayoutCompat.VERTICAL);
             TextView textviewName = new TextView(getContext());
             TextView textviewDate = new TextView(getContext());
-            int subLayoutViewId = subLayoutView.getId();
 
-            // оформление view
-            int remarkColor = Color.parseColor("#FFFAF096");
+            // оформление вьюшек
+            int noteColor = Color.parseColor("#FFFAF096");
 
             textviewDate.setText(date);
             textviewDate.setTextColor(Color.GRAY);
             textviewDate.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textviewDate.setBackgroundColor(remarkColor);
+            textviewDate.setBackgroundColor(noteColor);
 
-            textviewName.setText(remark);
+            textviewName.setText(note);
             textviewName.setTextSize(25);
             textviewName.setTextColor(Color.BLACK);
             textviewName.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textviewName.setBackgroundColor(remarkColor);
+            textviewName.setBackgroundColor(noteColor);
 
-            // добавление view в layouts
+            // добавление вьюшек в layouts
             subLayoutView.addView(textviewName);
             subLayoutView.addView(textviewDate);
             layoutView.addView(subLayoutView);
 
-            // вызов menu
+            // вызов popup menu долгим нажатием
             subLayoutView.setOnLongClickListener(v -> {
                 Activity activity = requireActivity();
                 PopupMenu popupMenu = new PopupMenu(activity, v);
@@ -107,48 +106,47 @@ public class RemarksList extends Fragment {
 
             // обработка нажатия на заметку
             final int index = i;
+
             subLayoutView.setOnClickListener(v -> {
-                currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[index], getResources().getStringArray(R.array.descriptions)[index], getResources().getStringArray(R.array.dates)[index]);
-                showRemark(currentRemark);
+                currentNote = new Note(getResources().getStringArray(R.array.notes)[index], getResources().getStringArray(R.array.descriptions)[index], getResources().getStringArray(R.array.dates)[index]);
+                showNote(currentNote);
             });
         }
     }
 
     // метод вызывает один из двух методов в зависимости от ориентации экрана
-    private void showRemark(Remark remark) {
+    private void showNote(Note note) {
         if (isLandscape) {
-            showRemarkLandscape(remark);
+            showNoteLandscape(note);
         } else {
-            showRemarkPortrait(remark);
+            showNotePortrait(note);
         }
     }
 
-    private void showRemarkPortrait(Remark remark) {
-        // создаём новый фрагмент
-        RemarksDetailedFragment notesDetailed = RemarksDetailedFragment.newInstance(remark);
-        // выполняем транзакцию по замене фрагмента
+    private void showNotePortrait(Note note) {
+
+        // создаём новый фрагмент с текущей позицией
+        NotesDetailedFragment notesDetailed = NotesDetailedFragment.newInstance(note);
+        // выполняем транзакцию по замене фрагмента (написано что-то непонятное)
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.remarkDetailed, notesDetailed);
+        fragmentTransaction.replace(R.id.noteDetailed, notesDetailed);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
 
-        // переходим на RemarkssDetailedActivity, т.к. к ней привязан фрагмент с деталями заметки
         Intent intent = new Intent();
-        intent.setClass(getActivity(), RemarksDetailedActivity.class);
-        // передаем с интентом экземпляр заметки, по которой было нажатие
-        intent.putExtra(RemarksDetailedFragment.ARG_REMARK, remark);
-//        startActivity(intent);
+        intent.setClass(getActivity(), NotesDetailedActivity.class);
+        intent.putExtra(NotesDetailedFragment.ARG_NOTE, note);
     }
 
-    private void showRemarkLandscape(Remark remark) {
+    private void showNoteLandscape(Note note) {
         // создаём новый фрагмент с текущей позицией
-        RemarksDetailedFragment remarksDetailed = RemarksDetailedFragment.newInstance(remark);
-        // выполняем транзакцию по замене фрагмента
+        NotesDetailedFragment notesDetailed = NotesDetailedFragment.newInstance(note);
+        // выполняем транзакцию по замене фрагмента (написано что-то непонятное)
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailed);
+        fragmentTransaction.replace(R.id.noteDetailed, notesDetailed);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
@@ -159,22 +157,22 @@ public class RemarksList extends Fragment {
         super.onActivityCreated(savedInstanceState);
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        //  показываем сохраненную заметку
+        // если фрагмент уже появлялся - показываем сохраненную заметку
         if (savedInstanceState != null) {
-            currentRemark = savedInstanceState.getParcelable(CURRENT_REMARK);
+            currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
         } else {
-            // если не появлась заметка - показываем самую первую
-            currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[0], getResources().getStringArray(R.array.descriptions)[0], getResources().getStringArray(R.array.dates)[0]);
+            // если не появлялся - показываем самую первую
+            currentNote = new Note(getResources().getStringArray(R.array.notes)[0], getResources().getStringArray(R.array.descriptions)[0], getResources().getStringArray(R.array.dates)[0]);
         }
         if (isLandscape) {
-            showRemarkLandscape(currentRemark);
+            showNoteLandscape(currentNote);
         }
     }
 
     // сохраняем текущую отображаемую заметку
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(CURRENT_REMARK, currentRemark);
+        outState.putParcelable(CURRENT_NOTE, currentNote);
         super.onSaveInstanceState(outState);
     }
 
