@@ -11,8 +11,8 @@ import android.widget.ImageView;
 
 public class ImageFragment extends Fragment {
 
-    private static final String ARG_INDEX = "index";
-    private static final int DEFAULT_INDEX = 0;
+    public static final String ARG_INDEX = "index";
+    public static final int DEFAULT_INDEX = 0;
     private int index =DEFAULT_INDEX;
 
     private static final int[] CITY_IMAGS = {
@@ -48,7 +48,7 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_image, container, false);
-        ImageView imageView= view.findViewById(R.id.city_inage);
+        ImageView imageView= view.findViewById(R.id.city_image);
 
         imageView.setImageResource(CITY_IMAGS[index]);
         return view;

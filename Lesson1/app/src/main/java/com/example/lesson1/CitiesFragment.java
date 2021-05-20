@@ -24,7 +24,8 @@ public class CitiesFragment extends Fragment {
 
     // При создании фрагмента укажем его макет
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cities, container, false);
     }
@@ -33,7 +34,7 @@ public class CitiesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initList(view);
+         initList(view);
     }
 
     // создаём список городов на экране из массива в ресурсах
@@ -52,18 +53,39 @@ public class CitiesFragment extends Fragment {
             textView.setTextSize(30);//размер текст
             layoutView.addView(textView);//в контейнер кладем текст
             final int fi = i;
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            textView.setOnClickListener(v -> {
+                showImage(fi);
 //                    showPortCoatOfArms(fi);
 //                    showCoatOfArms(fi);
 //                    currentPosition = fi;
 //                    showCoatOfArms(currentPosition);
-                    currentCity = new City(fi, getResources().getStringArray(R.array.cities)[fi]);
-                    showCoatOfArms(currentCity);
-                }
+                currentCity = new City(fi, getResources().getStringArray(R.array.cities)[fi]);
+                showCoatOfArms(currentCity);
             });
         }
+    }
+    private void showImage(int index) {
+        if (isLandscape){
+            showLandImage(index);
+        }else {
+            showPortImage(index);
+        }
+
+    }
+
+    private void showLandImage(int index) {
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.image_fragment_container, ImageFragment.newInstance(index))
+                .commit();
+    }
+
+    private void showPortImage(int index) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), CityImageActivity.class);
+        intent.putExtra(ImageFragment.ARG_INDEX, index);
+        startActivity(intent);
+
     }
 
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
@@ -97,11 +119,14 @@ public class CitiesFragment extends Fragment {
         if (isLandscape) {
 //            showLandCoatOfArms(0);
             showLandCoatOfArms(currentCity);
+                }
+        if (isLandscape){
+            showImage(ImageFragment.DEFAULT_INDEX);
         }
     }
 
-//    private void showCoatOfArms(int index) {
-        private void showCoatOfArms(City currentCity) {
+    //    private void showCoatOfArms(int index) {
+    private void showCoatOfArms(City currentCity) {
         if (isLandscape) {
 //            showLandCoatOfArms(index);
             showLandCoatOfArms(currentCity);

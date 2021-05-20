@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class CoatOfArmsFragment extends Fragment {
 
-//    public static final String ARG_INDEX = "index";
+    public static final String ARG_INDEX = "index";
 //    private int index;
     public static final String ARG_CITY = "city";
     private City city;
