@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9CEFAA"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".RemarksDetailedFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/edgeMarginPortrait"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/remarkName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="@color/black"
+            android:textSize="@dimen/descriptionTextSizePortrait"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/remarkDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:layout_weight="3"
+            android:text="@string/blank_date"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/dateTextSizePortrait"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/remarkDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="@dimen/edgeMarginPortrait"
+        android:text="@string/blank_description"
+        android:textSize="@dimen/descriptionTextSizePortrait" />
+
+</LinearLayout>
