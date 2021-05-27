@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.remarkDetailed, RemarksList.newInstance());
+            transaction.replace(R.id.remarkDetailed, RemarksListFragment.newInstance());
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             transaction.commit();
         }

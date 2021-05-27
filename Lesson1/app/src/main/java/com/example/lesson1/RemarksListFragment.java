@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.Objects;
 
-public class RemarksList extends Fragment {
+public class RemarksListFragment extends Fragment {
 
 
     private static final String CURRENT_REMARK = "CurrentRemark";
@@ -44,7 +44,7 @@ public class RemarksList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //создаем RecyclerView и передаем в макет fragment_notes_list
+        //создаем RecyclerView и передаем в макет fragment_remark_list
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_remarks_list, container, false);
         recyclerView.setHasFixedSize(true);
 
@@ -63,7 +63,9 @@ public class RemarksList extends Fragment {
         viewHolderAdapter.setOnClickListener((v, position) -> {
             final int index = position;
 
-            currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[index], getResources().getStringArray(R.array.descriptions)[index], getResources().getStringArray(R.array.dates)[index]);
+            currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[index],
+                    getResources().getStringArray(R.array.descriptions)[index],
+                    getResources().getStringArray(R.array.dates)[index]);
             showRemark(currentRemark);
         });
         recyclerView.setAdapter(viewHolderAdapter);
@@ -76,11 +78,11 @@ public class RemarksList extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public static RemarksList newInstance() {
-        RemarksList fragment = new RemarksList();
+    public static RemarksListFragment newInstance() {
+        RemarksListFragment remarksListFragment = new RemarksListFragment();
         Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        remarksListFragment.setArguments(args);
+        return remarksListFragment;
     }
 
     //определяем класс ViewHolderAdapter ВНУТРИ класса списка (RemarksList)
@@ -190,7 +192,7 @@ public class RemarksList extends Fragment {
         // выполняем транзакцию по замене фрагмента
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack("remarkList");
+        fragmentTransaction.addToBackStack("remarkListFragment");
         fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailed);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();

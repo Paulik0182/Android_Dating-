@@ -10,7 +10,7 @@
 
         <fragment
             android:id="@+id/remarkList"
-            android:name="com.example.lesson1.RemarksList"
+            android:name="com.example.lesson1.RemarksListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp" />
