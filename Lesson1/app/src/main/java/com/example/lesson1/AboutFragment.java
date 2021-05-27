@@ -9,18 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class About extends Fragment {
+public class AboutFragment extends Fragment {
 
 
-    public About() {
+    public AboutFragment() {
         // Required empty public constructor
     }
 
-    public static About newInstance() {
-        About fragment = new About();
+    public static AboutFragment newInstance() {
+        AboutFragment aboutFragment = new AboutFragment();
         Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        aboutFragment.setArguments(args);
+        return aboutFragment;
     }
 
     @Override

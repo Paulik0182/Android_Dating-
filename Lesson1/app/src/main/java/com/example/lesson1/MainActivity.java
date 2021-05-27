@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_about:
-                About aboutPage = About.newInstance();
+                AboutFragment aboutPage = AboutFragment.newInstance();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.addToBackStack(null);
