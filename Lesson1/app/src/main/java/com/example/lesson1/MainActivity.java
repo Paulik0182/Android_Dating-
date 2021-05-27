@@ -1,6 +1,12 @@
 package com.example.lesson1;
 
 /**
+ * Урок 8
+ * 1. Создайте список ваших заметок.
+ * 2. Создайте карточку для элемента списка.
+ * 3. Класс данных, созданный на шестом уроке, используйте для заполнения карточки списка.
+ * 4. * Создайте фрагмент для редактирования данных в конкретной карточке. Этот фрагмент пока можно вызвать через основное меню.
+ * <p>
  * Урок 7
  * 1. Подумайте о функционале вашего приложения заметок. Какие экраны там могут быть, помимо основного со списком заметок? Как можно использовать
  * меню и всплывающее меню в вашем приложении? Не обязательно сразу пытаться реализовать весь этот функционал, достаточно создать макеты и структуру,
@@ -21,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -43,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //при переходе экрана из landscape в portrait показывается фрагмент RemarkList и очищается бэкстек
+        if (savedInstanceState != null && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.remarkDetailed, RemarksList.newInstance());
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            transaction.commit();
+        }
+        initView();
     }
 
     private void initView() {
@@ -120,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean navigateFragment(int id, MenuItem item) {
         switch (id) {
             case R.id.action_favorite:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
             case R.id.action_settings:
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.action_about:
                 About aboutPage = About.newInstance();
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -131,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.remarkDetailed, aboutPage);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 transaction.commit();
+                return true;
         }
         return true;
     }
