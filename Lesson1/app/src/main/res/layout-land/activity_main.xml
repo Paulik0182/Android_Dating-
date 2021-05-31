@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="#69EC70"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#69EC70"
+    android:baselineAligned="false"
     android:fitsSystemWindows="true"
+    android:orientation="horizontal"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/remarkList"
-        android:name="com.example.lesson1.RemarksList"
-
-        android:layout_weight="5"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:layout_weight="5"></FrameLayout>
 
     <FrameLayout
         android:id="@+id/remarkDivider"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/black"
         android:layout_weight="0.05"
-        android:background="?android:attr/detailsElementBackground" />
+        android:background="?android:attr/detailsElementBackground"
+        android:backgroundTint="@color/black" />
 
     <FrameLayout
         android:id="@+id/remarkDetailed"

@@ -1,6 +1,11 @@
 package com.example.lesson1;
 
 /**
+ * Урок 9
+ * 1. Сделайте фрагмент добавления и редактирования данных, если вы ещё не сделали его.
+ * 2. Сделайте навигацию между фрагментами, также организуйте обмен данными между фрагментами.
+ * 3. Создайте контекстное меню для изменения и удаления заметок.
+ * 4. * Изучите, каким образом можно вызывать DatePicker в виде диалогового окна. Создайте текстовое поле, при нажатии на которое вызывалось бы диалоговое окно с DatePicker.
  * Урок 8
  * 1. Создайте список ваших заметок.
  * 2. Создайте карточку для элемента списка.
@@ -23,7 +28,6 @@ package com.example.lesson1;
  * 5. * Разберитесь, как можно сделать, и сделайте корректировку даты создания при помощи DatePicker.
  */
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,13 +38,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -50,7 +51,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //при переходе экрана из landscape в portrait показывается фрагмент RemarkList и очищается бэкстек
+
+        //для сохранения измененных данных заметки
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.remarkList, new RemarksListFragment());
+            transaction.commit();
+        }
+
+        //при переходе экрана из landscape в portrait показывается фрагмент RemarkListFragment и очищается бэкстек
         if (savedInstanceState != null && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -78,16 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Обработка навигационного меню
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (navigateFragment(id, item)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                    return true;
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (navigateFragment(id, item)) {
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
             }
+            return false;
         });
     }
 
@@ -95,41 +102,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         return toolbar;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Здесь определяем меню приложения (активити)
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem search = menu.findItem(R.id.action_search); // поиск пункта меню поиска
-        SearchView searchText = (SearchView) search.getActionView(); // строка поиска
-        searchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            // реагирует на конец ввода поиска
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String queryToSearch = searchText.getQuery().toString();
-                Toast.makeText(MainActivity.this, queryToSearch, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            // реагирует на нажатие каждой клавиши
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (navigateFragment(id, item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("NonConstantResourceId")

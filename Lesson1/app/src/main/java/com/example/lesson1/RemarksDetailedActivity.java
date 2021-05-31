@@ -17,9 +17,9 @@ public class RemarksDetailedActivity extends AppCompatActivity {
             return;
         }
         if (savedInstanceState == null) {
-            RemarksDetailedFragment remarksDetailed = new RemarksDetailedFragment();
-            remarksDetailed.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, remarksDetailed).commit();
+            RemarksDetailedFragment remarksDetailedFragment = new RemarksDetailedFragment();
+            remarksDetailedFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, remarksDetailedFragment).commit();
         }
     }
 }

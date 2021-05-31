@@ -8,11 +8,21 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-        <fragment
+    <FrameLayout
+        android:id="@+id/remarkDetailed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <FrameLayout
             android:id="@+id/remarkList"
             android:name="com.example.lesson1.RemarksListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp">
+
+        </FrameLayout>
+
+    </FrameLayout>
 
 </FrameLayout>

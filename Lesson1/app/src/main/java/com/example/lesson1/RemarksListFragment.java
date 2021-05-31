@@ -1,180 +1,85 @@
 package com.example.lesson1;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatImageView;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.Objects;
+import java.util.Date;
 
 public class RemarksListFragment extends Fragment {
 
-
     private static final String CURRENT_REMARK = "CurrentRemark";
+    private static final String ARG_REMARK_LIST = "RemarkList";
     private Remark currentRemark;
     private boolean isLandscape;
 
+    protected int mLastSelectedPosition = -1;
+
+    public CardDataSource mDataSource;
+    public ViewHolderAdapter mViewHolderAdapter;
+    public RecyclerView mRecyclerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         //создаем RecyclerView и передаем в макет fragment_remark_list
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_remarks_list, container, false);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_remarks_list, container, false);
+        mRecyclerView.setHasFixedSize(true);
 
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
         DividerItemDecoration decorator = new DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL);
         decorator.setDrawable(getResources().getDrawable(R.drawable.decoration));
-        recyclerView.addItemDecoration(decorator);
+        mRecyclerView.addItemDecoration(decorator);
 
         //создаем layout manager для RecyclerView и связываем их
-        LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mRecyclerView.getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
 
+        mDataSource = CardDataSourceImpl.getInstance(getResources());
         //создаем adapter для RecyclerView и связываем их
-        ViewHolderAdapter viewHolderAdapter = new ViewHolderAdapter(inflater, new CardDataSourceImpl(getResources()));
-        viewHolderAdapter.setOnClickListener((v, position) -> {
+        mViewHolderAdapter = new ViewHolderAdapter(this, this, mDataSource);
+        mViewHolderAdapter.setOnClickListener((v, position) -> {
             final int index = position;
-
-            currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[index],
-                    getResources().getStringArray(R.array.descriptions)[index],
-                    getResources().getStringArray(R.array.dates)[index]);
+            currentRemark = mDataSource.getItemAt(index);
             showRemark(currentRemark);
         });
-        recyclerView.setAdapter(viewHolderAdapter);
+        mRecyclerView.setAdapter(mViewHolderAdapter);
 
-        return recyclerView;
-    }
+        getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    public static RemarksListFragment newInstance() {
-        RemarksListFragment remarksListFragment = new RemarksListFragment();
-        Bundle args = new Bundle();
-        remarksListFragment.setArguments(args);
-        return remarksListFragment;
-    }
-
-    //определяем класс ViewHolderAdapter ВНУТРИ класса списка (RemarksList)
-    //в этом классе также реализуем слушатели нажатия
-    private class ViewHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private final LayoutInflater mInflater;
-        private final CardDataSource mDataSource;
-        private OnClickListener mOnClickListener;
-
-        public ViewHolderAdapter(LayoutInflater mInflater, CardDataSource mDataSource) {
-            this.mInflater = mInflater;
-            this.mDataSource = mDataSource;
-        }
-
-        public void setOnClickListener(OnClickListener onClickListener) {
-            mOnClickListener = onClickListener;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = mInflater.inflate(R.layout.list_item, parent, false);
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            CardData cardData = mDataSource.getItemAt(position);
-            holder.populate(cardData);
-
-            //клик по View
-            holder.itemView.setOnClickListener(v -> {
-                if (mOnClickListener != null) {
-                    mOnClickListener.onItemClick(v, position);
-                }
-            });
-
-            // вызов popup menu долгим нажатием
-            holder.itemView.setOnLongClickListener(v -> {
-                Activity activity = requireActivity();
-                PopupMenu popupMenu = new PopupMenu(activity, v);
-                Menu menu = popupMenu.getMenu();
-                activity.getMenuInflater().inflate(R.menu.popup, menu);
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    int id = item.getItemId();
-                    switch (id) {
-                        case R.id.favorite_popup:
-                            Toast.makeText(getContext(), "В Избранное", Toast.LENGTH_SHORT).show();
-                            return true;
-                        case R.id.delete_popup:
-                            Toast.makeText(getContext(), "Удалить", Toast.LENGTH_SHORT).show();
-                            return true;
-                        case R.id.rename_popup:
-                            Toast.makeText(getContext(), "Переименовать", Toast.LENGTH_SHORT).show();
-                            return true;
-                    }
-                    return true;
-                });
-                popupMenu.show();
-                return true;
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mDataSource.getItemsCount();
-        }
-    }
-
-    //определяем класс ViewHolder ВНУТРИ класса списка (RemarktesList)
-    //определяем в нем элементы UI (View), которые будут в нашем RecyclerView
-    //ViewHolder хранит соответствия между элементом списка и элементами UI
-    private static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView text;
-        public final AppCompatImageView image;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            text = itemView.findViewById(R.id.list_item_text);
-            image = itemView.findViewById(R.id.list_item_img);
-        }
-
-        //класс populate связывает данные карточки (CardView) и View в элементе CardView макета
-        public void populate(CardData data) {
-            text.setText(data.text);
-            image.setImageResource(data.imageResourceId);
-        }
-    }
-
-    //интерфейс ВНУТРИ класса для обработки нажатия
-    private interface OnClickListener {
-        void onItemClick(View v, int position);
+        return mRecyclerView;
     }
 
     // метод вызывает один из двух методов в зависимости от ориентации экрана
@@ -187,17 +92,17 @@ public class RemarksListFragment extends Fragment {
     }
 
     private void showRemarkPortrait(Remark remark) {
-        // создаём новый фрагмент
-        RemarksDetailedFragment remarksDetailed = RemarksDetailedFragment.newInstance(remark);
+        // создаём новый фрагмент с текущей позицией
+        RemarksDetailedFragment remarksDetailedFragment = RemarksDetailedFragment.newInstance(remark);
         // выполняем транзакцию по замене фрагмента
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack("remarkListFragment");
-        fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailed);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailedFragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
+
         Intent intent = new Intent();
-        // передаем с интентом экземпляр заметки, по которой было нажатие
         //заменил RemarkDetailedActivity на RemarkDetailedFragment для отвезки фрагмента RemarkDetailed от 2-ой активити
         intent.setClass(getActivity(), RemarksDetailedFragment.class);
         intent.putExtra(RemarksDetailedFragment.ARG_REMARK, remark);
@@ -205,14 +110,19 @@ public class RemarksListFragment extends Fragment {
 
     private void showRemarkLandscape(Remark remark) {
         // создаём новый фрагмент с текущей позицией
-        RemarksDetailedFragment remarksDetailed = RemarksDetailedFragment.newInstance(remark);
+        RemarksDetailedFragment remarksDetailedFragment = RemarksDetailedFragment.newInstance(remark);
         // выполняем транзакцию по замене фрагмента
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailed);
+        fragmentTransaction.replace(R.id.remarkDetailed, remarksDetailedFragment);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
+
+        Intent intent = new Intent();
+        //заменил RemarkDetailedActivity на RemarkDetailedFragment для отвезки фрагмента RemarkDetailed от 2-ой активити
+        intent.setClass(getActivity(), RemarksDetailedFragment.class);
+        intent.putExtra(RemarksDetailedFragment.ARG_REMARK, remark);
     }
 
     @Override
@@ -224,10 +134,12 @@ public class RemarksListFragment extends Fragment {
         if (savedInstanceState != null) {
             currentRemark = savedInstanceState.getParcelable(CURRENT_REMARK);
         } else {
-            // если не появлась заметка - показываем самую первую
-            currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[0],
-                    getResources().getStringArray(R.array.descriptions)[0],
-                    getResources().getStringArray(R.array.dates)[0]);
+            // если не появлялся - показываем самую первую
+            if (mDataSource.getRemarkData() != null) {
+                currentRemark = new Remark(getResources().getStringArray(R.array.remarks)[0],
+                        getResources().getStringArray(R.array.descriptions)[0],
+                        getResources().getStringArray(R.array.dates)[0]);
+            }
         }
         if (isLandscape) {
             showRemarkLandscape(currentRemark);
@@ -239,5 +151,81 @@ public class RemarksListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_REMARK, currentRemark);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+
+            case R.id.action_favorite:
+                Toast.makeText(requireActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_add:
+                Remark newRemark = new Remark("New Remark", "", new Date().toString());
+                mDataSource.add(newRemark);
+                int position = mDataSource.getItemsCount() - 1;
+                mViewHolderAdapter.notifyItemInserted(position);
+                mRecyclerView.scrollToPosition(position);
+                return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = requireActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.context_menu_main, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.context_edit) {
+            if (mLastSelectedPosition != -1) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.remarkList, RemarkEditFragment.newInstance(mLastSelectedPosition));
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        } else if (item.getItemId() == R.id.context_delete) {
+            if (mLastSelectedPosition != -1) {
+                mDataSource.remove(mLastSelectedPosition);
+                mViewHolderAdapter.notifyItemRemoved(mLastSelectedPosition);
+            }
+        } else {
+            return super.onContextItemSelected(item);
+        }
+        return true;
+    }
+
+    public static RemarksListFragment newInstance() {
+        RemarksListFragment fragment = new RemarksListFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    //интерфейс внутри класса для обработки нажатия
+    public interface OnClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    void setLastSelectedPosition(int lastSelectedPosition) {
+        mLastSelectedPosition = lastSelectedPosition;
     }
 }
