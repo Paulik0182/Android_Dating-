@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class RemarksListFragment extends Fragment {
 
@@ -71,13 +72,12 @@ public class RemarksListFragment extends Fragment {
         //создаем adapter для RecyclerView и связываем их
         mViewHolderAdapter = new ViewHolderAdapter(this, this, mDataSource);
         mViewHolderAdapter.setOnClickListener((v, position) -> {
-            final int index = position;
-            currentRemark = mDataSource.getItemAt(index);
+            currentRemark = mDataSource.getItemAt(position);
             showRemark(currentRemark);
         });
         mRecyclerView.setAdapter(mViewHolderAdapter);
 
-        getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Objects.requireNonNull(getContext()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         return mRecyclerView;
     }
@@ -197,6 +197,7 @@ public class RemarksListFragment extends Fragment {
         if (item.getItemId() == R.id.context_edit) {
             if (mLastSelectedPosition != -1) {
                 FragmentManager fragmentManager = getFragmentManager();
+                assert fragmentManager != null;//test
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.remarkList, RemarkEditFragment.newInstance(mLastSelectedPosition));
                 transaction.addToBackStack(null);

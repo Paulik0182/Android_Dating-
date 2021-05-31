@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar ( toolbar );
         return toolbar;
     }
 
