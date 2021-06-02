@@ -6,6 +6,20 @@ import java.util.List;
 
 public interface CardDataSource {
 
+    interface DataSourceListener {
+        void onItemAdded(int idx);
+
+        void onItemRemoved(int idx);
+
+        void onItemUpdated(int idx);
+
+        void onDataSetChanged();
+    }
+
+    void addDataSourceListener(DataSourceListener listener);
+
+    void removeDataSourceListener(DataSourceListener listener);
+
     List<Remark> getRemarkData();
 
     Remark getItemAt(int idx);
@@ -15,4 +29,6 @@ public interface CardDataSource {
     void add(@NonNull Remark data);
 
     void remove(int position);
+
+    void update(@NonNull Remark data);
 }

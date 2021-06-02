@@ -31,8 +31,8 @@ package com.example.lesson1;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Configuration;
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -49,57 +49,57 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate ( savedInstanceState );
+        setContentView ( R.layout.activity_main );
 
         //для сохранения измененных данных заметки
         if (savedInstanceState == null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.remarkList, new RemarksListFragment());
-            transaction.commit();
+            FragmentManager fragmentManager = getSupportFragmentManager ();
+            FragmentTransaction transaction = fragmentManager.beginTransaction ();
+            transaction.replace ( R.id.remarkList, new RemarksListFragment () );
+            transaction.commit ();
         }
 
         //при переходе экрана из landscape в portrait показывается фрагмент RemarkListFragment и очищается бэкстек
-        if (savedInstanceState != null && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.remarkDetailed, RemarksListFragment.newInstance());
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            transaction.commit();
+        if (savedInstanceState != null && getResources ().getConfiguration ().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            FragmentManager fragmentManager = getSupportFragmentManager ();
+            FragmentTransaction transaction = fragmentManager.beginTransaction ();
+            transaction.replace ( R.id.remarkDetailed, RemarksListFragment.newInstance () );
+            fragmentManager.popBackStack ( null, FragmentManager.POP_BACK_STACK_INCLUSIVE );
+            transaction.commit ();
         }
-        initView();
+        initView ();
     }
 
     private void initView() {
-        Toolbar toolbar = initToolbar();
-        initDrawer(toolbar);
+        Toolbar toolbar = initToolbar ();
+        initDrawer ( toolbar );
     }
 
     // регистрация drawer
     private void initDrawer(Toolbar toolbar) {
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        final DrawerLayout drawer = findViewById ( R.id.drawer_layout );
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (
                 this, drawer, toolbar,
                 R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+                R.string.navigation_drawer_close );
+        drawer.addDrawerListener ( toggle );
+        toggle.syncState ();
 
         // Обработка навигационного меню
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (navigateFragment(id, item)) {
-                drawer.closeDrawer(GravityCompat.START);
+        NavigationView navigationView = findViewById ( R.id.nav_view );
+        navigationView.setNavigationItemSelectedListener ( item -> {
+            int id = item.getItemId ();
+            if (navigateFragment ( id, item )) {
+                drawer.closeDrawer ( GravityCompat.START );
                 return true;
             }
             return false;
-        });
+        } );
     }
 
     private Toolbar initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById ( R.id.toolbar );
         setSupportActionBar ( toolbar );
         return toolbar;
     }
@@ -109,16 +109,16 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_favorite:
             case R.id.action_settings:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText ( MainActivity.this, item.getTitle (), Toast.LENGTH_SHORT ).show ();
                 return true;
             case R.id.action_about:
-                AboutFragment aboutPage = AboutFragment.newInstance();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.replace(R.id.remarkDetailed, aboutPage);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                transaction.commit();
+                AboutFragment aboutPage = AboutFragment.newInstance ();
+                FragmentManager fragmentManager = getSupportFragmentManager ();
+                FragmentTransaction transaction = fragmentManager.beginTransaction ();
+                transaction.addToBackStack ( null );
+                transaction.replace ( R.id.remarkDetailed, aboutPage );
+                transaction.setTransition ( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
+                transaction.commit ();
                 return true;
         }
         return true;

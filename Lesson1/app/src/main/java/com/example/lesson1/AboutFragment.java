@@ -17,9 +17,9 @@ public class AboutFragment extends Fragment {
     }
 
     public static AboutFragment newInstance() {
-        AboutFragment aboutFragment = new AboutFragment();
-        Bundle args = new Bundle();
-        aboutFragment.setArguments(args);
+        AboutFragment aboutFragment = new AboutFragment ();
+        Bundle args = new Bundle ();
+        aboutFragment.setArguments ( args );
         return aboutFragment;
     }
 
@@ -27,6 +27,6 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        return inflater.inflate ( R.layout.fragment_about, container, false );
     }
 }

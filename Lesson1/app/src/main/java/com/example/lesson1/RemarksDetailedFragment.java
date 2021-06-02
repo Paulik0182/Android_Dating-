@@ -19,18 +19,18 @@ public class RemarksDetailedFragment extends Fragment {
     }
 
     public static RemarksDetailedFragment newInstance(Remark remark) {
-        RemarksDetailedFragment fragment = new RemarksDetailedFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_REMARK, remark);
-        fragment.setArguments(args);
+        RemarksDetailedFragment fragment = new RemarksDetailedFragment ();
+        Bundle args = new Bundle ();
+        args.putParcelable ( ARG_REMARK, remark );
+        fragment.setArguments ( args );
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            remark = getArguments().getParcelable(ARG_REMARK);
+        super.onCreate ( savedInstanceState );
+        if (getArguments () != null) {
+            remark = getArguments ().getParcelable ( ARG_REMARK );
         }
     }
 
@@ -38,17 +38,16 @@ public class RemarksDetailedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_remarks_detailed, container, false);
+        View view = inflater.inflate ( R.layout.fragment_remarks_detailed, container, false );
 
-        TextView remarkDescription = view.findViewById(R.id.remarkDescription);
-        remarkDescription.setText(remark.getDescription());
+        TextView remarkDescription = view.findViewById ( R.id.remarkDescription );
+        remarkDescription.setText ( remark.getDescription () );
 
-        TextView remarkName = view.findViewById(R.id.remarkName);
-        remarkName.setText(remark.getName());
+        TextView remarkName = view.findViewById ( R.id.remarkName );
+        remarkName.setText ( remark.getName () );
 
-        TextView remarkDate = view.findViewById(R.id.remarkDate);
-        remarkDate.setText(remark.getDate());
+        TextView remarkDate = view.findViewById ( R.id.remarkDate );
+        remarkDate.setText ( remark.getDate () );
         return view;
-
     }
 }

@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 //определяем класс ViewHolderAdapter внутри класса списка (RemarksListFragment)
 //в этом классе также реализуем слушатели нажатия
 public class ViewHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private final RemarksListFragment mRemarksListFragment;
     private final RemarksListFragment mFragment;
     private final LayoutInflater mInflater;
     private final CardDataSource mDataSource;
     private RemarksListFragment.OnClickListener mOnClickListener;
 
-    public ViewHolderAdapter(RemarksListFragment fragment, RemarksListFragment remarksListFragment, CardDataSource cardDataSource) {
+    public ViewHolderAdapter(RemarksListFragment fragment, CardDataSource cardDataSource) {
         mFragment = fragment;
-        mRemarksListFragment = remarksListFragment;
-        mInflater = fragment.getLayoutInflater();
+        mInflater = fragment.getLayoutInflater ();
         mDataSource = cardDataSource;
     }
 
@@ -30,29 +28,25 @@ public class ViewHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = mInflater.inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(v);
+        View v = mInflater.inflate ( R.layout.list_item, parent, false );
+        return new ViewHolder ( v );
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Remark remarkData = mDataSource.getItemAt(position);
-        holder.populate(mFragment, remarkData);
+        Remark remarkData = mDataSource.getItemAt ( position );
+        holder.populate ( mFragment, remarkData );
 
         //клик по View
-        holder.itemView.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener ( v -> {
             if (mOnClickListener != null) {
-                mOnClickListener.onItemClick(v, position);
+                mOnClickListener.onItemClick ( v, position );
             }
-        });
+        } );
     }
 
     @Override
     public int getItemCount() {
-        return mDataSource.getItemsCount();
-    }
-
-    public RemarksListFragment getmRemarksListFragment() {
-        return mRemarksListFragment;
+        return mDataSource.getItemsCount ();
     }
 }

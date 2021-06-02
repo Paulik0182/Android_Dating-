@@ -15,19 +15,19 @@ class ViewHolder extends RecyclerView.ViewHolder {
     public AppCompatImageView image;
 
     public ViewHolder(@NonNull View itemView) {
-        super(itemView);
-        text = itemView.findViewById(R.id.list_item_text);
-        image = itemView.findViewById(R.id.list_item_img);
+        super ( itemView );
+        text = itemView.findViewById ( R.id.list_item_text );
+        image = itemView.findViewById ( R.id.list_item_img );
     }
 
     //класс populate связывает данные карточки (CardView) и View в элементе CardView макета
     public void populate(RemarksListFragment fragment, Remark data) {
-        text.setText(data.getName());
+        text.setText ( data.getName () );
 
-        itemView.setOnLongClickListener((v) -> {
-            fragment.setLastSelectedPosition(getLayoutPosition());
+        itemView.setOnLongClickListener ( (v) -> {
+            fragment.setLastSelectedPosition ( getLayoutPosition () );
             return false;
-        });
-        fragment.registerForContextMenu(itemView);
+        } );
+        fragment.registerForContextMenu ( itemView );
     }
 }
