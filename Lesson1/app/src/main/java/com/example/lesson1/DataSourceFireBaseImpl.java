@@ -43,7 +43,6 @@ public class DataSourceFireBaseImpl extends BaseDataSource {
         return instance;
     }
 
-
     private DataSourceFireBaseImpl() {
         mCollection.orderBy ( "name", Query.Direction.ASCENDING ).get ()
                 .addOnCompleteListener ( this::onFetchComplete )

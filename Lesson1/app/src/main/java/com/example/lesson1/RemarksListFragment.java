@@ -1,6 +1,7 @@
 package com.example.lesson1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -70,7 +71,6 @@ public class RemarksListFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         setHasOptionsMenu ( true );
         super.onCreate ( savedInstanceState );
     }
@@ -187,6 +187,12 @@ public class RemarksListFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        setHasOptionsMenu ( false );
+        super.onDestroy ();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated ( view, savedInstanceState );
     }
@@ -220,6 +226,8 @@ public class RemarksListFragment extends Fragment {
 
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        System.out.println ( "gig onCreateContext value: " + mLastSelectedPosition );
+        menu.clear ();
         super.onCreateContextMenu ( menu, v, menuInfo );
         MenuInflater menuInflater = requireActivity ().getMenuInflater ();
         menuInflater.inflate ( R.menu.context_menu_main, menu );
@@ -227,6 +235,7 @@ public class RemarksListFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        System.out.println ( "gig onContextItemSelected value: " + (mLastSelectedPosition != -1) + mLastSelectedPosition );
         if (item.getItemId () == R.id.context_edit) {
             if (mLastSelectedPosition != -1) {
                 FragmentManager fragmentManager = getFragmentManager ();
@@ -238,8 +247,17 @@ public class RemarksListFragment extends Fragment {
             }
         } else if (item.getItemId () == R.id.context_delete) {
             if (mLastSelectedPosition != -1) {
-                mDataSource.remove ( mLastSelectedPosition );
-                mViewHolderAdapter.notifyItemRemoved ( mLastSelectedPosition );
+//диалоговое окно с подтверждением удаления
+                AlertDialog.Builder builder = new AlertDialog.Builder ( requireActivity () );
+                builder.setTitle ( "Подтвердите действие" ).setMessage ( "Удалить заметку?" )
+                        .setNegativeButton ( "Нет", (dialog, which) -> {
+                        } )
+                        .setPositiveButton ( "Да", (dialog, which) -> {
+                            mDataSource.remove ( mLastSelectedPosition );
+                            mViewHolderAdapter.notifyItemRemoved ( mLastSelectedPosition );
+                        } );
+                AlertDialog alertDialog = builder.create ();
+                alertDialog.show ();
             }
         } else {
             return super.onContextItemSelected ( item );
@@ -261,5 +279,6 @@ public class RemarksListFragment extends Fragment {
 
     void setLastSelectedPosition(int lastSelectedPosition) {
         mLastSelectedPosition = lastSelectedPosition;
+        System.out.println ( "gig " + mLastSelectedPosition );
     }
 }
